@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="red">#c21d21</color>
+    <color name="light_black">#333333</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primary">#FC6067</color>
+    <color name="primary2">#68B1FC</color>
+    <color name="secondary">#565D69</color>
+    <color name="rating_bar_background">#cc319fa0</color>
+    <color name="light_primary">#4312BFC5</color>
+    <color name="primary_text_color">#12BFC5</color>
+    <color name="button_white_text_color">#595959</color>
+    <color name="button_primary_text_color">#ffffff</color>
+    <color name="text_color_grey">#808080</color>
+    <color name="line_color_grey">#c4c4c4</color>
+    <color name="background_color_light_grey">#f4f4f4</color>
+
+
+    <color name="colorText">#0c0d0a</color>
+    <color name="colorTextHint">#7d7d7d</color>
+    <color name="yesBtn">@color/primary</color>
+    <color name="noBtn">@color/line_color_grey</color>
+
+</resources>
