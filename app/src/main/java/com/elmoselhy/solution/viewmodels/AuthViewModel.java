@@ -70,6 +70,7 @@ public class AuthViewModel extends BaseViewModel {
                         addUserSuccessLiveData.observe((LifecycleOwner) context, result -> {
                             registerLiveData.setValue(true);
                         });
+
                     } else {
                         Toast.makeText(context, context.getString(R.string.error_In_Register), Toast.LENGTH_SHORT).show();
                     }
