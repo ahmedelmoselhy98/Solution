@@ -31,6 +31,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.CouponVH> 
 
     @Override
     public void onBindViewHolder(@NonNull CouponVH holder, int position) {
+        holder.binding.setReport(list.get(position));
         holder.itemView.setOnClickListener(view -> {
 //            context.startActivity(new Intent(context, ConfirmLocationActivity.class));
         });
@@ -38,7 +39,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.CouponVH> 
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
 
     class CouponVH extends RecyclerView.ViewHolder {

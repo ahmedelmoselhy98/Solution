@@ -1,8 +1,9 @@
 package com.elmoselhy.solution.model.response;
 
-public class User {
+public class Account {
     private String id;
     private String name;
+    private String description;
     private String email;
     private String phone;
     private String image;
@@ -18,6 +19,14 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setName(String name) {

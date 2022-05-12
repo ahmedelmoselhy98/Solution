@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="account"
+            type="com.elmoselhy.solution.model.response.Account"/>
     </data>
 
     <androidx.cardview.widget.CardView
@@ -20,10 +22,14 @@
             android:gravity="center"
             >
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:src="@drawable/ic_calender" />
+                android:src="@drawable/logo"
+                app:riv_corner_radius="@dimen/_5sdp"
+                android:elevation="@dimen/_4sdp"
+                imageBinding="@{account.image}"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,7 +40,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/corporation_name"
+                    android:text="@{account.name}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_13sdp"
                     android:textStyle="bold"/>
@@ -42,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:text="@string/corporation_description"
+                    android:text="@{account.description}"
                     android:textColor="@color/text_color_grey"
                     android:textSize="@dimen/_11sdp"/>
             </LinearLayout>

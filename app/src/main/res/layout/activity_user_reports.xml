@@ -34,11 +34,26 @@
             android:textSize="@dimen/_18sdp"
             android:textStyle="bold" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_user_report" />
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_user_report" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/no_results"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:visibility="gone"
+                android:id="@+id/emptyText"
+                />
+
+        </FrameLayout>
     </LinearLayout>
 </layout>

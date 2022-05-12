@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="account"
+            type="com.elmoselhy.solution.model.response.Account" />
     </data>
 
     <ScrollView
@@ -39,17 +42,18 @@
                 android:textStyle="bold" />
 
             <com.makeramen.roundedimageview.RoundedImageView
+                imageBinding="@{account.image}"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
                 android:layout_marginTop="@dimen/_30sdp"
-                android:src="@drawable/user_image"
-                app:riv_corner_radius="@dimen/_35sdp" />
+                android:src="@drawable/ic_outline_user"
+                app:riv_corner_radius="@dimen/_10sdp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Welcome, Ahmed"
+                android:text='@{"Welcome,"+account.name}'
                 android:textColor="@color/black"
                 android:textSize="@dimen/_18sdp" />
 
@@ -57,6 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
+                android:visibility="gone"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_8sdp">
 
@@ -106,7 +111,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
-                            android:text="Ahmed" />
+                            android:text="@{account.name}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -120,7 +125,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="phone"
-                            android:text="01234567989" />
+                            android:text="@{account.name}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.button.MaterialButton

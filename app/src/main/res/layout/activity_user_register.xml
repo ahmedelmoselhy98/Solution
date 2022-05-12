@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.elmoselhy.solution.base.BaseViewModel" />
     </data>
-
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <include layout="@layout/loading_layout"
+            app:viewModel="@{viewModel}"
+            />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -48,6 +51,9 @@
                     android:layout_height="@dimen/_70sdp"
                     android:layout_gravity="center"
                     android:id="@+id/profileIv"
+                    android:scaleType="fitXY"
+                    app:riv_corner_radius="@dimen/_8sdp"
+                    android:elevation="@dimen/_8sdp"
                     android:src="@drawable/ic_outline_user"
                     android:padding="@dimen/_10sdp"
                     android:background="@drawable/stroke_circle_background_primary"
@@ -124,5 +130,5 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

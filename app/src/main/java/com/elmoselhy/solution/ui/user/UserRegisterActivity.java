@@ -10,21 +10,20 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.elmoselhy.solution.MainActivity;
 import com.elmoselhy.solution.R;
 import com.elmoselhy.solution.base.BaseActivity;
 import com.elmoselhy.solution.commons.Utils;
 import com.elmoselhy.solution.commons.Validator;
 import com.elmoselhy.solution.databinding.ActivityUserRegisterBinding;
-import com.elmoselhy.solution.model.response.User;
-import com.elmoselhy.solution.viewmodels.AuthViewModel;
+import com.elmoselhy.solution.model.response.Account;
+import com.elmoselhy.solution.viewmodels.UserViewModel;
 import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 
 public class UserRegisterActivity extends BaseActivity {
     ActivityUserRegisterBinding binding;
-    AuthViewModel authViewModel;
-    User user;
+    UserViewModel userViewModel;
+    Account user;
 
 
     @Override
@@ -35,14 +34,14 @@ public class UserRegisterActivity extends BaseActivity {
     }
 
     private void initPage() {
-        user = new User();
+        user = new Account();
         setUpPageActions();
         setUpViewModel();
     }
 
     private void setUpViewModel() {
-        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
-        authViewModel.setContext(this);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.setContext(this);
         setUpObserver();
     }
 
@@ -61,19 +60,18 @@ public class UserRegisterActivity extends BaseActivity {
         user.setName(binding.nameInput.getEditText().getText().toString());
         user.setEmail(binding.emailInput.getEditText().getText().toString());
         user.setPhone(binding.phoneInput.getEditText().getText().toString());
-        authViewModel.userRegister(user,binding.passwordInput.getEditText().getText().toString());
+        userViewModel.userRegister(user,binding.passwordInput.getEditText().getText().toString());
     }
 
     private void setUpObserver() {
-        authViewModel.observeRegister().observe(this, result -> {
+        userViewModel.observeRegister().observe(this, result -> {
             startActivity(new Intent(this, UserHomeActivity.class));
         });
-        authViewModel.observeImageUrl().observe(this, imageUrl -> {
+        userViewModel.observeImageUrl().observe(this, imageUrl -> {
             user.setImage(imageUrl);
             Utils.bindUser(binding.profileIv, imageUrl);
         });
-
-//        binding.setViewModel(myViewModel);
+        binding.setViewModel(userViewModel);
         binding.setLifecycleOwner(this);
     }
 
@@ -136,7 +134,7 @@ public class UserRegisterActivity extends BaseActivity {
             // Get a list of picked images
             for (Image image : ImagePicker.getImages(data)) {
                 Uri selectedFileUri = image.getUri();
-                authViewModel.upLoadImage(UserRegisterActivity.this, selectedFileUri);
+                userViewModel.upLoadUserImage(UserRegisterActivity.this, selectedFileUri);
             }
         }
     }

@@ -10,16 +10,20 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elmoselhy.solution.R;
+import com.elmoselhy.solution.commons.Keys;
 import com.elmoselhy.solution.databinding.ItemCorporationBinding;
+import com.elmoselhy.solution.model.response.Account;
 import com.elmoselhy.solution.model.response.Corporation;
+import com.elmoselhy.solution.model.response.Report;
 import com.elmoselhy.solution.ui.user.ConfirmLocationActivity;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 public class CorporationAdapter  extends RecyclerView.Adapter<CorporationAdapter.CouponVH> {
-    List<Corporation> list;
+    List<Account> list;
     Context context;
-    public CorporationAdapter(Context context,List<Corporation> list) {
+    public CorporationAdapter(Context context,List<Account> list) {
         this.list = list;
         this.context = context;
     }
@@ -33,14 +37,20 @@ public class CorporationAdapter  extends RecyclerView.Adapter<CorporationAdapter
 
     @Override
     public void onBindViewHolder(@NonNull CouponVH holder, int position) {
+        holder.binding.setAccount(list.get(position));
         holder.itemView.setOnClickListener(view -> {
-            context.startActivity(new Intent(context, ConfirmLocationActivity.class));
+            Report report = new Report();
+            report.setCorporationId(list.get(position).getId());
+            report.setCorporationName(list.get(position).getName());
+            context.startActivity(new Intent(context, ConfirmLocationActivity.class)
+            .putExtra(Keys.IntentKeys.REPORT,new Gson().toJson(report)));
+
         });
     }
 
     @Override
     public int getItemCount() {
-        return 20;
+        return list.size();
     }
 
     class CouponVH extends RecyclerView.ViewHolder {

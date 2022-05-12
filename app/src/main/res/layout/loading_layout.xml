@@ -12,7 +12,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/line_color_grey"
+        android:background="@color/light_primary"
         android:elevation="@dimen/_10sdp"
         android:focusable="true"
         android:clickable="true"
@@ -25,7 +25,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="gone"
             app:SpinKit_Color="@color/primary" />
     </FrameLayout>
 </layout>

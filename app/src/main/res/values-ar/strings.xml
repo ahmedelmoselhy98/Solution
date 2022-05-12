@@ -52,4 +52,7 @@
     <string name="required">Required</string>
     <string name="dont_match">Don\'t match</string>
     <string name="logout">Logout</string>
+    <string name="error_In_add_report">Error in add report</string>
+    <string name="success">success</string>
+    <string name="no_results">No results</string>
 </resources>

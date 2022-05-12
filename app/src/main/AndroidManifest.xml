@@ -13,6 +13,10 @@
         android:roundIcon="@drawable/logo1"
         android:supportsRtl="true"
         android:theme="@style/Theme.Solution">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${GOOGLE_MAPS_API_KEY}" />
+
         <activity
             android:name=".ui.user.UserReportsActivity"
             android:exported="false" />
@@ -32,9 +36,6 @@
             android:name=".ui.user.CompleteReportInformationActivity"
             android:exported="false" />
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAT8jIGcYY0GVCGFMIS6ptZY7aIkScWiZ}" />
 
         <activity
             android:name=".ui.user.UserHomeActivity"
@@ -69,6 +70,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+
     </application>
 
 </manifest>

@@ -10,14 +10,13 @@ import android.view.View;
 
 import com.elmoselhy.solution.R;
 import com.elmoselhy.solution.base.BaseActivity;
-import com.elmoselhy.solution.commons.Utils;
 import com.elmoselhy.solution.commons.Validator;
 import com.elmoselhy.solution.databinding.ActivityUserLoginBinding;
-import com.elmoselhy.solution.viewmodels.AuthViewModel;
+import com.elmoselhy.solution.viewmodels.UserViewModel;
 
 public class UserLoginActivity extends BaseActivity {
     ActivityUserLoginBinding binding;
-    AuthViewModel authViewModel;
+    UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +37,19 @@ public class UserLoginActivity extends BaseActivity {
         });
     }
     private void setUpViewModel() {
-        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
-        authViewModel.setContext(this);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.setContext(this);
         setUpObserver();
+        binding.setViewModel(userViewModel);
+        binding.setLifecycleOwner(this);
     }
     private void login() {
         if (isFormHasErrors())
             return;
-        authViewModel.login(binding.emailInput.getEditText().getText().toString(),binding.passwordInput.getEditText().getText().toString());
+        userViewModel.login(binding.emailInput.getEditText().getText().toString(),binding.passwordInput.getEditText().getText().toString());
     }
     private void setUpObserver() {
-        authViewModel.observeLogin().observe(this, result -> {
+        userViewModel.observeLogin().observe(this, result -> {
             startActivity(new Intent(this, UserHomeActivity.class));
         });
         binding.setLifecycleOwner(this);

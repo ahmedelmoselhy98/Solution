@@ -11,13 +11,13 @@ import com.elmoselhy.solution.base.BaseActivity;
 import com.elmoselhy.solution.databinding.ActivityUserHomeBinding;
 import com.elmoselhy.solution.ui.AboutUsActivity;
 import com.elmoselhy.solution.ui.SplashActivity;
-import com.elmoselhy.solution.viewmodels.AuthViewModel;
+import com.elmoselhy.solution.viewmodels.UserViewModel;
 
 public class UserHomeActivity extends BaseActivity {
 
 
     ActivityUserHomeBinding binding;
-    AuthViewModel authViewModel;
+    UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +42,15 @@ public class UserHomeActivity extends BaseActivity {
             startActivity(new Intent(this, AboutUsActivity.class));
         });
         binding.logoutBtn.setOnClickListener(view -> {
-            authViewModel.logout();
+            userViewModel.logout();
             startActivity(new Intent(this, SplashActivity.class));
             finishAffinity();
         });
     }
 
     private void setUpViewModel() {
-        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
-        authViewModel.setContext(this);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.setContext(this);
     }
 
 }

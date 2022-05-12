@@ -106,7 +106,7 @@ public class Utils {
     public static void bindUser(ImageView view, String imageUrl) {
         Picasso.get()
                 .load(imageUrl).fit()
-                .placeholder(R.color.line_color_grey)
+                .placeholder(R.drawable.logo)
                 .into(view);
     }
 

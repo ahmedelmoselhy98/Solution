@@ -12,15 +12,15 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.elmoselhy.solution.R;
 import com.elmoselhy.solution.base.BaseViewModel;
-import com.elmoselhy.solution.model.response.User;
-import com.elmoselhy.solution.repositories.AuthRepository;
+import com.elmoselhy.solution.model.response.Account;
+import com.elmoselhy.solution.repositories.CorporationRepository;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.UploadTask;
 
-public class AuthViewModel extends BaseViewModel {
-    AuthRepository authRepository = new AuthRepository();
+public class CorporationViewModel extends BaseViewModel {
+    CorporationRepository corporationRepository = new CorporationRepository();
     Context context;
 
     public void setContext(Context context) {
@@ -29,8 +29,8 @@ public class AuthViewModel extends BaseViewModel {
 
     private MutableLiveData<Boolean> registerLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> loginLiveData = new MutableLiveData<>();
-    private MutableLiveData<Boolean> addUserSuccessLiveData = new MutableLiveData<>();
-    private MutableLiveData<User> getUserLiveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> addCorporationSuccessLiveData = new MutableLiveData<>();
+    private MutableLiveData<Account> getCorporationLiveData = new MutableLiveData<>();
     private MutableLiveData<String> imageUrlLiveData = new MutableLiveData<>();
 
     public LiveData<Boolean> observeLogin() {
@@ -39,21 +39,23 @@ public class AuthViewModel extends BaseViewModel {
     public LiveData<Boolean> observeRegister() {
         return registerLiveData;
     }
-    public LiveData<User> observeGetUser() {
-        return getUserLiveData;
+    public LiveData<Account> observeGetCorporation() {
+        return getCorporationLiveData;
     }
     public LiveData<String> observeImageUrl() {
         return imageUrlLiveData;
     }
     public void logout() {
-        authRepository.auth().signOut();
+        corporationRepository.auth().signOut();
     }
     public void login(String email, String password) {
-        authRepository.auth().signInWithEmailAndPassword(email, password)
+        loading.setValue(true);
+        corporationRepository.auth().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
+                    loading.setValue(false);
                     if (task.isComplete() && task.isSuccessful()) {
-                        getUserToDatabase(task.getResult().getUser().getUid());
-                        getUserLiveData.observe((LifecycleOwner) context, result -> {
+                        getCorporationToDatabase(task.getResult().getUser().getUid());
+                        getCorporationLiveData.observe((LifecycleOwner) context, result -> {
                             loginLiveData.setValue(true);
                         });
                     } else {
@@ -61,38 +63,43 @@ public class AuthViewModel extends BaseViewModel {
                     }
                 });
     }
-    public void userRegister(User user, String password) {
-        authRepository.auth().createUserWithEmailAndPassword(user.getEmail(), password)
+    public void corporationRegister(Account user, String password) {
+        loading.setValue(true);
+        corporationRepository.auth().createUserWithEmailAndPassword(user.getEmail(), password)
                 .addOnCompleteListener(task -> {
+                    loading.setValue(false);
                     if (task.isComplete() && task.isSuccessful()) {
                         user.setId(task.getResult().getUser().getUid());
-                        addUserToDatabase(user);
-                        addUserSuccessLiveData.observe((LifecycleOwner) context, result -> {
+                        addCorporationToDatabase(user);
+                        addCorporationSuccessLiveData.observe((LifecycleOwner) context, result -> {
                             registerLiveData.setValue(true);
                         });
-
                     } else {
                         Toast.makeText(context, context.getString(R.string.error_In_Register), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-    public void addUserToDatabase(User user) {
-        authRepository.usersRef().child(user.getId()).setValue(user)
+    public void addCorporationToDatabase(Account user) {
+        loading.setValue(true);
+        corporationRepository.corporationRef().child(user.getId()).setValue(user)
                 .addOnCompleteListener(task -> {
+                    loading.setValue(false);
                     if (task.isComplete() && task.isSuccessful()) {
-                        addUserSuccessLiveData.setValue(true);
+                        addCorporationSuccessLiveData.setValue(true);
                     } else {
                         Toast.makeText(context, context.getString(R.string.error_In_Register), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    public void getUserToDatabase(String id) {
-        authRepository.usersRef().child(id).get()
+    public void getCorporationToDatabase(String id) {
+        loading.setValue(true);
+        corporationRepository.corporationRef().child(id).get()
                 .addOnCompleteListener(task -> {
+                    loading.setValue(false);
                     if (task.isComplete() && task.isSuccessful()) {
-                        User user = task.getResult().getValue(User.class);
-                        getUserLiveData.setValue(user);
+                        Account user = task.getResult().getValue(Account.class);
+                        getCorporationLiveData.setValue(user);
                     } else {
                         Toast.makeText(context, context.getString(R.string.error_In_Register), Toast.LENGTH_SHORT).show();
                     }
@@ -103,7 +110,7 @@ public class AuthViewModel extends BaseViewModel {
     public void upLoadImage(Context context, Uri uri) {
         loading.setValue(true);
         String imageName = System.currentTimeMillis() + ".jpg";
-        authRepository.usersStorageRef().child(imageName).putFile(uri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+        corporationRepository.corporationStorageRef().child(imageName).putFile(uri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                 if (!task.isSuccessful()) {
@@ -111,7 +118,7 @@ public class AuthViewModel extends BaseViewModel {
                 }
 
                 // Continue with the task to get the download URL
-                return authRepository.usersStorageRef().child(imageName).getDownloadUrl();
+                return corporationRepository.corporationStorageRef().child(imageName).getDownloadUrl();
             }
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
